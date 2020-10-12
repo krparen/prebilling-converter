@@ -1,0 +1,6 @@
+energosbyt:
+  rabbit:
+    host: 10.5.3.70
+    port: 5672
+    username: admin
+    password: Etooshagh5
