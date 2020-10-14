@@ -4,3 +4,5 @@ energosbyt:
     port: 5672
     username: admin
     password: Etooshagh5
+    input-queue: pb
+    output-queue: pb.out
