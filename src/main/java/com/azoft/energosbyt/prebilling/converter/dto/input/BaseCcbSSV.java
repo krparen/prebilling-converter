@@ -1,5 +1,6 @@
 package com.azoft.energosbyt.prebilling.converter.dto.input;
 
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,6 +21,6 @@ public class BaseCcbSSV {
   String accountNumber;
   String premiseId;
   String division;
-  List<StatementConstructDetail> statementConstructDetail;
+  List<StatementConstructDetail> statementConstructDetail = new ArrayList<>();
 }
 
