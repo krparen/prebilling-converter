@@ -20,6 +20,8 @@ public class RabbitConsumer {
 
   private static final String TYPE_HEADER = "type";
 
+  private static final String ERROR_QUEUE_NAME = "pb.error";
+
   @Autowired
   private List<InputMessageProcessor> messageProcessors;
   @Autowired
@@ -28,16 +30,20 @@ public class RabbitConsumer {
   @RabbitListener(queues = "g_eremeev")
   public void listen (Message message) {
 
-    String messageType = message.getMessageProperties().getHeader(TYPE_HEADER);
-    InputMessageProcessor processor = chooseMessageProcessor(messageType);
+    try {
+      String messageType = message.getMessageProperties().getHeader(TYPE_HEADER);
+      InputMessageProcessor processor = chooseMessageProcessor(messageType);
 
-    if (processor == null) {
-      log.error("Message with unknown type {} received. headers: {}, body: {}",
-          messageType, message.getMessageProperties().getHeaders(), rabbitService.getMessageBodyAsString(message));
-      return;
+      if (processor == null) {
+        log.error("Message with unknown type {} received, skipping it. headers: {}, body: {}",
+            messageType, message.getMessageProperties().getHeaders(), rabbitService.getMessageBodyAsString(message));
+        return;
+      }
+
+      processor.process(message);
+    } catch (Exception e) {
+      log.error("Exception happened. Sending message to error queue. Exception: ", e);
     }
-
-    processor.process(message);
   }
 
   private InputMessageProcessor chooseMessageProcessor(String messageType) {

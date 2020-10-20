@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SetPremiseMessageProcessor extends InputMessageProcessor<BaseCcbPremise, ImportAddress> {
+public class SetAddressMessageProcessor extends InputMessageProcessor<BaseCcbPremise, ImportAddress> {
 
-  public SetPremiseMessageProcessor(Converter<BaseCcbPremise, ImportAddress> converter,
+  public SetAddressMessageProcessor(Converter<BaseCcbPremise, ImportAddress> converter,
                                     ObjectMapper mapper,
                                     RabbitService rabbitService) {
     super(converter, mapper, rabbitService);
@@ -25,6 +25,6 @@ public class SetPremiseMessageProcessor extends InputMessageProcessor<BaseCcbPre
 
   @Override
   public boolean appliesTo(String messageType) {
-    return "setPremise".equals(messageType);
+    return "setAddress".equals(messageType);
   }
 }
