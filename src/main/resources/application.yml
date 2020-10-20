@@ -6,3 +6,5 @@ energosbyt:
     password: Etooshagh5
     input-queue: pb
     output-queue: pb.out
+    request:
+      timeout-in-ms: 30000

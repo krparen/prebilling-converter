@@ -25,7 +25,7 @@ public class RabbitConsumer {
   @Autowired
   private RabbitService rabbitService;
 
-  @RabbitListener(queues = "pb")
+  @RabbitListener(queues = "g_eremeev")
   public void listen (Message message) {
 
     String messageType = message.getMessageProperties().getHeader(TYPE_HEADER);

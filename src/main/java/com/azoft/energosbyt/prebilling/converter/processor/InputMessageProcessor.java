@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public abstract class InputMessageProcessor {
 
-  protected String outputQueueName = "pb.out";
+  protected String outputQueueName = "g_eremeev_out";
 
   @Autowired
   protected ObjectMapper mapper;

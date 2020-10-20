@@ -35,6 +35,6 @@ public class SetPremiseMessageProcessor extends InputMessageProcessor {
 
   @Override
   public boolean appliesTo(String messageType) {
-    return messageType.equals("setAccount");
+    return "setPremise".equals(messageType);
   }
 }

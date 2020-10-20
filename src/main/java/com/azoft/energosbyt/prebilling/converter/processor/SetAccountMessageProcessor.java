@@ -33,6 +33,6 @@ public class SetAccountMessageProcessor extends InputMessageProcessor {
 
   @Override
   public boolean appliesTo(String messageType) {
-    return messageType.equals("setAccount");
+    return "setAccount".equals(messageType);
   }
 }

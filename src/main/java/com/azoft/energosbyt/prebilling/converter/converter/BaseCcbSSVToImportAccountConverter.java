@@ -37,6 +37,7 @@ public class BaseCcbSSVToImportAccountConverter implements Converter<BaseCcbSSV,
     account.setExt_id_company(input.getDivision());
     account.setExt_id_division(getExtIdDivision(input));
     account.setExt_id_district(getExtIdDistrict(input));
+    account.setExt_id_person(input.getPersonId());
 
     return account;
   }
