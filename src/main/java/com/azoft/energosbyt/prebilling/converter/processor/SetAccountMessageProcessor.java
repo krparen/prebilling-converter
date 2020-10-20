@@ -4,7 +4,9 @@ import com.azoft.energosbyt.prebilling.converter.converter.BaseCcbSSVToImportAcc
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbSSV;
 import com.azoft.energosbyt.prebilling.converter.dto.output.ImportAccount;
 import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
+import java.util.Map;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +21,14 @@ public class SetAccountMessageProcessor extends InputMessageProcessor {
   @Override
   public void process(Message inputMessage) {
     BaseCcbSSV input = rabbitService.deserializeBodyAsType(inputMessage, BaseCcbSSV.class);
+
+    MessageProperties outputProperties = new MessageProperties();
+    for (Map.Entry<String, Object> entry : inputMessage.getMessageProperties().getHeaders().entrySet()) {
+      outputProperties.setHeader(entry.getKey(), entry.getValue());
+    }
+
     ImportAccount output = baseCcbSSVToImportAccountConverter.convert(input);
-    rabbitService.send(outputQueueName, inputMessage.getMessageProperties(), output);
+    rabbitService.send(outputQueueName, outputProperties, output);
   }
 
   @Override

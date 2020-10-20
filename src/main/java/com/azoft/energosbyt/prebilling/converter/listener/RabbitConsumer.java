@@ -7,12 +7,14 @@ import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.core.Message;
 
 @Component
+@EnableRabbit
 @Slf4j
 public class RabbitConsumer {
 
@@ -23,10 +25,10 @@ public class RabbitConsumer {
   @Autowired
   private RabbitService rabbitService;
 
-  @RabbitListener(queues = "pb.out")
+  @RabbitListener(queues = "pb")
   public void listen (Message message) {
 
-    String messageType = message.getMessageProperties().getHeader("type");
+    String messageType = message.getMessageProperties().getHeader(TYPE_HEADER);
     InputMessageProcessor processor = chooseMessageProcessor(messageType);
 
     if (processor == null) {
