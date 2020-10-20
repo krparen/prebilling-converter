@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.core.Message;
 
@@ -20,14 +21,15 @@ public class RabbitConsumer {
 
   private static final String TYPE_HEADER = "type";
 
-  private static final String ERROR_QUEUE_NAME = "pb.error";
+  @Value("${energosbyt.rabbit.error-queue}")
+  private String ERROR_QUEUE_NAME;
 
   @Autowired
   private List<InputMessageProcessor> messageProcessors;
   @Autowired
   private RabbitService rabbitService;
 
-  @RabbitListener(queues = "g_eremeev")
+  @RabbitListener(queues = "${energosbyt.rabbit.input-queue}")
   public void listen (Message message) {
 
     try {
@@ -43,6 +45,7 @@ public class RabbitConsumer {
       processor.process(message);
     } catch (Exception e) {
       log.error("Exception happened. Sending message to error queue. Exception: ", e);
+      rabbitService.send(ERROR_QUEUE_NAME, message);
     }
   }
 
@@ -57,7 +60,7 @@ public class RabbitConsumer {
     }
 
     if (validProcessors.size() > 1) {
-      String message = "More than one processor for type " + messageType;
+      String message = "More than one processor for message type " + messageType;
       log.error(message);
       throw new ApiException(message, ErrorCode.OPERATION_PROCESSING_ERROR, true);
     }

@@ -6,13 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
 @Slf4j
 public abstract class InputMessageProcessor<I, O> {
 
-  protected final String outputQueueName = "g_eremeev_out";
+  @Value("${energosbyt.rabbit.output-queue}")
+  protected String outputQueueName;
 
   protected final Converter<I, O> converter;
   protected final ObjectMapper mapper;

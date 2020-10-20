@@ -41,6 +41,10 @@ public class RabbitService {
         template.send(queueName, personRequestMessage);
     }
 
+    public void send (String queueName, Message message) {
+        template.send(queueName, message);
+    }
+
     protected String declareReplyQueueWithUuidName() {
         String replyQueueName = UUID.randomUUID().toString();
         Queue newQueue = new Queue(replyQueueName, false, false, true);
