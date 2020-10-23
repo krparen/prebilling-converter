@@ -33,6 +33,7 @@ public class RabbitConsumer {
   public void listen (Message message) {
 
     try {
+      log.info("processing message with type" + message.getMessageProperties().getHeader(TYPE_HEADER));
       String messageType = message.getMessageProperties().getHeader(TYPE_HEADER);
       InputMessageProcessor processor = chooseMessageProcessor(messageType);
 
