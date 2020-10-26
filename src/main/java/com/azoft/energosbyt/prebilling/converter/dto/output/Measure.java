@@ -1,6 +1,7 @@
 package com.azoft.energosbyt.prebilling.converter.dto.output;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import lombok.Data;
 
@@ -17,10 +18,10 @@ public class Measure {
   private String ext_id_point_record;
   private String place;
   private String address_full;
-  private String measure_date;
+  private Date measure_date;
   private String measure_type;
   private String measure_form;
-  private List<Register> register_value = new ArrayList<>();
+  private List<RegisterValue> register_value = new ArrayList<>();
   private String id_source;
   private String id_channel;
   private String id_variant_getting;

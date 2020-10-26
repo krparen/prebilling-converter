@@ -24,7 +24,7 @@ public class SetAddressMessageProcessor extends InputMessageProcessor<BaseCcbPre
   }
 
   @Override
-  public boolean appliesTo(String messageType) {
-    return "setAddress".equals(messageType);
+  protected String getMessageType() {
+    return "setAddress";
   }
 }
