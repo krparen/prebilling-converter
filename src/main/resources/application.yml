@@ -1,3 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: fiscaladmin
+    password: Ec0PyqvD
+    hikari:
+      maximum-pool-size: 5
+    url: jdbc:postgresql://10.5.2.48:5432/postgres
+
 energosbyt:
   rabbit:
     host: 10.5.3.70
