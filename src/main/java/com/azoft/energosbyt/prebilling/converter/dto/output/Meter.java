@@ -1,19 +1,36 @@
 package com.azoft.energosbyt.prebilling.converter.dto.output;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class Meter {
+
+  private static final String dateFormat = "yyyy-MM-dd";
+
   private String inform_system;
   private String ext_id;
   private String name;
   private String number;
   private String is_enabled;
-  private LocalDateTime begin_date;
-  private LocalDateTime end_date;
-  private String tariff_zone;
-  private String remove_date;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
+  @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
+  private LocalDate begin_date;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
+  @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
+  private LocalDate end_date;
+
+  private Integer tariff_zone;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
+  @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
+  private LocalDate remove_date;
+
   private List<Register> register;
 }
