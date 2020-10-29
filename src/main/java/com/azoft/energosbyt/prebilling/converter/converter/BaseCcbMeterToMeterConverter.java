@@ -38,6 +38,11 @@ public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter
     }
 
     private LocalDate getRemoveDate(BaseCcbMeter input) {
+
+        if (input.getMeterCharacteristic() == null) {
+            return null;
+        }
+
         LocalDate verificationDate = input.getMeterCharacteristic().getVerificationDate();
         Integer calibrationInterval = input.getMeterCharacteristic().getCalibrationInterval();
 
