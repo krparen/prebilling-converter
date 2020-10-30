@@ -29,6 +29,8 @@ public abstract class InputMessageProcessor<I, O> {
 
   protected abstract Class<I> getInputClass();
 
+  protected abstract String getMessageType();
+
   public void process(Message inputMessage) {
 
     I input = rabbitService.deserializeBodyAsType(inputMessage, getInputClass());
@@ -42,5 +44,7 @@ public abstract class InputMessageProcessor<I, O> {
     rabbitService.send(outputQueueName, outputProperties, output);
   }
 
-  public abstract boolean appliesTo (String messageType);
+  public boolean appliesTo (String messageType) {
+    return getMessageType().equals(messageType);
+  }
 }

@@ -22,7 +22,7 @@ public class SetAccountMessageProcessor extends InputMessageProcessor<BaseCcbSSV
   }
 
   @Override
-  public boolean appliesTo(String messageType) {
-    return "setAccount".equals(messageType);
+  protected String getMessageType() {
+    return "setAccount";
   }
 }
