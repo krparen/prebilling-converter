@@ -21,7 +21,7 @@ public class BaseMeterValueToImportMeasureConverter implements Converter<BaseMet
     measures.add(measure);
 
     ImportMeasure importMeasure = new ImportMeasure();
-    importMeasure.setMeasure(measures);
+    importMeasure.setMeasures(measures);
     return importMeasure;
   }
 }

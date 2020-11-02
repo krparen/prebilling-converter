@@ -23,7 +23,7 @@ public class BaseCcbPremiseToImportAddressConverter implements Converter<BaseCcb
     addresses.add(address);
 
     ImportAddress result = new ImportAddress();
-    result.setAddress(addresses);
+    result.setAddresses(addresses);
 
     return result;
   }

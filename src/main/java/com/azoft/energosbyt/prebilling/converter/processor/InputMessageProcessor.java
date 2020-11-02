@@ -1,6 +1,8 @@
 package com.azoft.energosbyt.prebilling.converter.processor;
 
 import com.azoft.energosbyt.prebilling.converter.converter.Converter;
+import com.azoft.energosbyt.prebilling.converter.dto.output.InformSystemHolder;
+import com.azoft.energosbyt.prebilling.converter.dto.output.ResultWrapper;
 import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +10,9 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 public abstract class InputMessageProcessor<I, O> {
@@ -40,8 +44,32 @@ public abstract class InputMessageProcessor<I, O> {
       outputProperties.setHeader(entry.getKey(), entry.getValue());
     }
 
-    O output = converter.convert(input);
+    O converted = converter.convert(input);
+
+    ResultWrapper<O> output = constructResult(converted);
+
     rabbitService.send(outputQueueName, outputProperties, output);
+  }
+
+  private ResultWrapper<O> constructResult(O converted) {
+
+    ResultWrapper<O> result = new ResultWrapper<>();
+    result.setGuid(UUID.randomUUID());
+    result.setCommand(getMessageType());
+    result.setCreationDate(LocalDateTime.now());
+    result.setData(converted);
+    setInformSystem(converted, result);
+
+    return result;
+  }
+
+  private void setInformSystem(O converted, ResultWrapper<O> result) {
+    if (converted instanceof InformSystemHolder) {
+      InformSystemHolder informSystemHolder = ((InformSystemHolder) converted);
+      result.setInformSystem(informSystemHolder.getInformSystem());
+    } else {
+      result.setInformSystem(null);
+    }
   }
 
   public boolean appliesTo (String messageType) {

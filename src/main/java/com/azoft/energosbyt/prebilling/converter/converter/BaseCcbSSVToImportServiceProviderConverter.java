@@ -20,7 +20,7 @@ public class BaseCcbSSVToImportServiceProviderConverter
 
 
     ImportServiceProvider result = new ImportServiceProvider();
-    result.setService_provider(serviceProviders);
+    result.setServiceProviders(serviceProviders);
     return result;
   }
 }
