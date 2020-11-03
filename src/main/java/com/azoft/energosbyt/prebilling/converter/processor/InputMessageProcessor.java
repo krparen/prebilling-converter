@@ -2,7 +2,8 @@ package com.azoft.energosbyt.prebilling.converter.processor;
 
 import com.azoft.energosbyt.prebilling.converter.converter.Converter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.InformSystemHolder;
-import com.azoft.energosbyt.prebilling.converter.dto.output.ResultWrapper;
+import com.azoft.energosbyt.prebilling.converter.dto.output.wrapper.ConverterResult;
+import com.azoft.energosbyt.prebilling.converter.dto.output.wrapper.ResultWrapper;
 import com.azoft.energosbyt.prebilling.converter.service.RabbitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public abstract class InputMessageProcessor<I, O> {
 
     ResultWrapper<O> output = constructResult(converted);
 
-    rabbitService.send(outputQueueName, outputProperties, output);
+    rabbitService.send(outputQueueName, outputProperties, ConverterResult.of(output));
   }
 
   private ResultWrapper<O> constructResult(O converted) {
