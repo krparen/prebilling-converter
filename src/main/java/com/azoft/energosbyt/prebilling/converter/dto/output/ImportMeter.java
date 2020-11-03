@@ -2,6 +2,7 @@ package com.azoft.energosbyt.prebilling.converter.dto.output;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ public class ImportMeter implements InformSystemHolder {
   @JsonProperty("meter")
   private List<Meter> meters;
 
+  @JsonIgnore
   @Override
   public String getInformSystem() {
 
