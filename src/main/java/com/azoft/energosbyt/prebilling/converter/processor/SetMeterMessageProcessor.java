@@ -26,4 +26,9 @@ public class SetMeterMessageProcessor extends InputMessageProcessor<BaseCcbMeter
     protected String getMessageType() {
         return "setMeter";
     }
+
+    @Override
+    protected String getOutputEventType() {
+        return "Import_Meter";
+    }
 }

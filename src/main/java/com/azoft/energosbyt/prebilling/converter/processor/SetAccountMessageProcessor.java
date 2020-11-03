@@ -17,6 +17,11 @@ public class SetAccountMessageProcessor extends InputMessageProcessor<BaseCcbSSV
   }
 
   @Override
+  protected String getOutputEventType() {
+    return "Import_Account";
+  }
+
+  @Override
   protected Class<BaseCcbSSV> getInputClass() {
     return BaseCcbSSV.class;
   }

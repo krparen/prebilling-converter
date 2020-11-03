@@ -126,7 +126,7 @@ public class RabbitService {
             throw new ApiException(message, e, ErrorCode.BAD_JSON_REQUEST);
         }
 
-        log.info("response from rabbit: {}", response);
+        log.info("deserialized from json: {}", response);
         return response;
     }
 }
