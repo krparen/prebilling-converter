@@ -13,18 +13,17 @@ import java.util.Comparator;
 import java.util.List;
 
 @Component
-public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremise, Address> {
+public class BaseCcbPremiseToAddressConverter extends AbstractConverter<BaseCcbPremise, Address> {
 
     private static final String REGION_QUERY =
             "SELECT out_value FROM get_one_references('R_STATE','CCB','ID','CCB','DESC')\n" +
                     "WHERE in_value = :state;";
 
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
     public Address convert(BaseCcbPremise input) {
         Address address = new Address();
+        address.setInform_system(getInformSystemCode(input.getSystem_id()));
         address.setExt_id(input.getPremiseId());
         address.setIndex(input.getPostal());
         address.setRegion(getRegion(input.getState()));

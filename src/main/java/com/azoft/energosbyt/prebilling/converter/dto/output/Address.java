@@ -36,4 +36,6 @@ public class Address {
   private String flat;
   private String address_full;
   private String house_fias;
+
+  private String inform_system;
 }
