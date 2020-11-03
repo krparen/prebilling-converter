@@ -47,12 +47,12 @@ public abstract class InputMessageProcessor<I, O> {
 
     O converted = converter.convert(input);
 
-    ResultWrapper<O> output = constructResult(converted);
+    ConverterResult<O> output = constructResult(converted);
 
-    rabbitService.send(outputQueueName, outputProperties, ConverterResult.of(output));
+    rabbitService.send(outputQueueName, outputProperties, output);
   }
 
-  private ResultWrapper<O> constructResult(O converted) {
+  private ConverterResult<O> constructResult(O converted) {
 
     ResultWrapper<O> result = new ResultWrapper<>();
     result.setGuid(UUID.randomUUID());
@@ -61,7 +61,7 @@ public abstract class InputMessageProcessor<I, O> {
     result.setData(converted);
     setInformSystem(converted, result);
 
-    return result;
+    return ConverterResult.of(result);
   }
 
   private void setInformSystem(O converted, ResultWrapper<O> result) {
