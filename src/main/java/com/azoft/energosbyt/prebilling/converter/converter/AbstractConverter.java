@@ -15,7 +15,7 @@ public abstract class AbstractConverter<I, O> implements Converter<I, O> {
                     "WHERE in_value = :systemName;";
 
     @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
+    protected NamedParameterJdbcTemplate jdbcTemplate;
 
     public String getInformSystemCode(String system) {
 
