@@ -27,4 +27,9 @@ public class SetAddressMessageProcessor extends InputMessageProcessor<BaseCcbPre
   protected String getMessageType() {
     return "setAddress";
   }
+
+  @Override
+  protected String getOutputEventType() {
+    return "Import_Address";
+  }
 }

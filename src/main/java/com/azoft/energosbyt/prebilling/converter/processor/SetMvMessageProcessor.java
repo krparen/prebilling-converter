@@ -25,4 +25,9 @@ public class SetMvMessageProcessor extends InputMessageProcessor<BaseMeterValue,
   protected String getMessageType() {
     return "setMv";
   }
+
+  @Override
+  protected String getOutputEventType() {
+    return "Import_Measure";
+  }
 }

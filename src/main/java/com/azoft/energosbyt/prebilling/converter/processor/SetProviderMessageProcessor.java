@@ -25,4 +25,9 @@ public class SetProviderMessageProcessor extends InputMessageProcessor<BaseCcbPr
     protected String getMessageType() {
         return "setProvider";
     }
+
+    @Override
+    protected String getOutputEventType() {
+        return "Import_Provider";
+    }
 }

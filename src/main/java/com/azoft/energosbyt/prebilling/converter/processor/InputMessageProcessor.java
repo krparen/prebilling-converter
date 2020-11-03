@@ -36,6 +36,8 @@ public abstract class InputMessageProcessor<I, O> {
 
   protected abstract String getMessageType();
 
+  protected abstract String getOutputEventType();
+
   public void process(Message inputMessage) {
 
     I input = rabbitService.deserializeBodyAsType(inputMessage, getInputClass());
@@ -56,7 +58,7 @@ public abstract class InputMessageProcessor<I, O> {
 
     ResultWrapper<O> result = new ResultWrapper<>();
     result.setGuid(UUID.randomUUID());
-    result.setCommand(getMessageType());
+    result.setCommand(getOutputEventType());
     result.setCreationDate(LocalDateTime.now());
     result.setData(converted);
     setInformSystem(converted, result);
