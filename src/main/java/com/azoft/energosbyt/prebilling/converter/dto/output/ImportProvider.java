@@ -2,11 +2,24 @@ package com.azoft.energosbyt.prebilling.converter.dto.output;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ImportProvider {
+public class ImportProvider implements InformSystemHolder {
 
-  private List<Provider> provider = new ArrayList<>();
+  @JsonProperty("provider")
+  private List<Provider> providers = new ArrayList<>();
+
+  @Override
+  public String getInformSystem() {
+
+    if (providers == null || providers.isEmpty()) {
+      return null;
+    }
+
+    return providers.get(0).getInform_system();
+  }
 
 }

@@ -24,7 +24,7 @@ public class BaseCcbMeterToImportMeterConverter implements Converter<BaseCcbMete
         List<Meter> meters = new ArrayList<>();
         meters.add(meter);
 
-        importMeter.setMeter(meters);
+        importMeter.setMeters(meters);
         return importMeter;
     }
 }

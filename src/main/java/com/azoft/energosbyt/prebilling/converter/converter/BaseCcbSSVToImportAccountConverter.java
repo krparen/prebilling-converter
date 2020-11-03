@@ -23,7 +23,7 @@ public class BaseCcbSSVToImportAccountConverter implements Converter<BaseCcbSSV,
     accounts.add(account);
 
     ImportAccount result = new ImportAccount();
-    result.setAccount(accounts);
+    result.setAccounts(accounts);
 
     return result;
   }

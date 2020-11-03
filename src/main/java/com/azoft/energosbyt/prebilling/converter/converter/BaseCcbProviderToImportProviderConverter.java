@@ -29,7 +29,7 @@ public class BaseCcbProviderToImportProviderConverter
                 })
                 .collect(Collectors.toList());
 
-        output.setProvider(providers);
+        output.setProviders(providers);
         return output;
     }
 
