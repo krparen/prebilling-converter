@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremise, Address> {
+public class BaseCcbPremiseToAddressConverter extends AbstractConverter<BaseCcbPremise, Address> {
 
     @Autowired
     private ReferenceQueryService referenceQueryService;
@@ -18,7 +18,7 @@ public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremis
     @Override
     public Address convert(BaseCcbPremise input, Map<String, Object> messageHeaders) {
         Address address = new Address();
-        address.setInform_system(referenceQueryService.getInformSystemCode(input.getSystemId()));
+        address.setInform_system(getInformSystem(input, messageHeaders));
         address.setExt_id(input.getPremiseId());
         address.setIndex(input.getPostal());
         address.setRegion(referenceQueryService.getRegion(input.getState()));

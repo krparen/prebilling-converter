@@ -10,13 +10,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Account> {
-
-    @Autowired
-    private ReferenceQueryService referenceQueryService;
+public class BaseCcbSSVToAccountConverter extends AbstractConverter<BaseCcbSSV, Account> {
 
     @Override
     public Account convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
@@ -35,20 +33,6 @@ public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Accou
         return account;
     }
 
-    private String getInformSystem(BaseCcbSSV input, Map<String, Object> messageHeaders) {
-
-        String systemId = null;
-
-        if (messageHeaders.get("system_id") != null) {
-            systemId = (String) messageHeaders.get("system_id");
-        }
-
-        if (systemId == null) {
-            systemId = input.getSystemId();
-        }
-
-        return referenceQueryService.getInformSystemCode(systemId);
-    }
 
 
     private String getExtIdDivision(BaseCcbSSV input) {
@@ -79,6 +63,7 @@ public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Accou
 
         return input.getStatementConstructDetail().stream()
                 .map(StatementConstructDetail::getStartDate)
+                .filter(Objects::nonNull)
                 .min(LocalDate::compareTo).get();
     }
 

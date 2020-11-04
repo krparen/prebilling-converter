@@ -3,8 +3,6 @@ package com.azoft.energosbyt.prebilling.converter.converter;
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbProvider;
 import com.azoft.energosbyt.prebilling.converter.dto.output.ImportProvider;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Provider;
-import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,17 +11,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class BaseCcbProviderToImportProviderConverter
-        implements Converter<BaseCcbProvider, ImportProvider> {
-
-    @Autowired
-    private ReferenceQueryService referenceQueryService;
+        extends AbstractConverter<BaseCcbProvider, ImportProvider> {
 
     @Override
     public ImportProvider convert(BaseCcbProvider input, Map<String, Object> messageHeaders) {
 
         ImportProvider output = new ImportProvider();
 
-        String systemCode = referenceQueryService.getInformSystemCode(input.getSystemId());
+        String systemCode = getInformSystem(input, messageHeaders);
         List<Provider> providers = input.getProvider().stream()
                 .map(inputProvider -> {
                     Provider provider = new Provider();

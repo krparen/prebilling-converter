@@ -13,15 +13,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class BaseCcbMeterToMeterConverter implements Converter<BaseCcbMeter, Meter> {
-
-    @Autowired
-    private ReferenceQueryService referenceQueryService;
+public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter, Meter> {
 
     @Override
     public Meter convert(BaseCcbMeter input, Map<String, Object> messageHeaders) {
         Meter output = new Meter();
-        output.setInform_system(referenceQueryService.getInformSystemCode(input.getSystemId()));
+        output.setInform_system(getInformSystem(input, messageHeaders));
         output.setExt_id(input.getMeter());
         output.setName(input.getModel());
         output.setNumber(input.getSerialNumber());
