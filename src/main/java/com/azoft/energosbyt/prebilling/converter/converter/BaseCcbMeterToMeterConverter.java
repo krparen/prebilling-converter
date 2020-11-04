@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,7 +19,7 @@ public class BaseCcbMeterToMeterConverter implements Converter<BaseCcbMeter, Met
     private ReferenceQueryService referenceQueryService;
 
     @Override
-    public Meter convert(BaseCcbMeter input) {
+    public Meter convert(BaseCcbMeter input, Map<String, Object> messageHeaders) {
         Meter output = new Meter();
         output.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         output.setExt_id(input.getMeter());

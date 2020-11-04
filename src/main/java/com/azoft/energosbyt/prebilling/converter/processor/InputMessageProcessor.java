@@ -47,7 +47,7 @@ public abstract class InputMessageProcessor<I, O> {
       outputProperties.setHeader(entry.getKey(), entry.getValue());
     }
 
-    O converted = converter.convert(input);
+    O converted = converter.convert(input, inputMessage.getMessageProperties().getHeaders());
 
     ConverterResult<O> output = constructResult(converted);
 

@@ -5,14 +5,16 @@ import com.azoft.energosbyt.prebilling.converter.dto.output.Measure;
 import com.azoft.energosbyt.prebilling.converter.dto.output.RegisterValue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BaseMeterValueToMeasureConverter implements Converter<BaseMeterValue, Measure> {
+
   @Override
-  public Measure convert(BaseMeterValue input) {
+  public Measure convert(BaseMeterValue input, Map<String, Object> messageHeaders) {
     Measure output = new Measure();
     output.setInform_system(input.getApp_id());
     output.setAccount_number(input.getAccountNumber());

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,7 +19,7 @@ public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Accou
     private ReferenceQueryService referenceQueryService;
 
     @Override
-    public Account convert(BaseCcbSSV input) {
+    public Account convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
         Account account = new Account();
         account.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         account.setExt_id(input.getStatementConstructId());

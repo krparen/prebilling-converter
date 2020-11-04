@@ -7,6 +7,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremise, Address> {
 
@@ -14,7 +16,7 @@ public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremis
     private ReferenceQueryService referenceQueryService;
 
     @Override
-    public Address convert(BaseCcbPremise input) {
+    public Address convert(BaseCcbPremise input, Map<String, Object> messageHeaders) {
         Address address = new Address();
         address.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         address.setExt_id(input.getPremiseId());

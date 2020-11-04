@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class BaseCcbMeterToImportMeterConverter implements Converter<BaseCcbMeter, ImportMeter> {
@@ -16,8 +17,8 @@ public class BaseCcbMeterToImportMeterConverter implements Converter<BaseCcbMete
     private BaseCcbMeterToMeterConverter baseCcbMeterToMeterConverter;
 
     @Override
-    public ImportMeter convert(BaseCcbMeter input) {
-        Meter meter = baseCcbMeterToMeterConverter.convert(input);
+    public ImportMeter convert(BaseCcbMeter input, Map<String, Object> messageHeaders) {
+        Meter meter = baseCcbMeterToMeterConverter.convert(input, messageHeaders);
 
         ImportMeter importMeter = new ImportMeter();
 

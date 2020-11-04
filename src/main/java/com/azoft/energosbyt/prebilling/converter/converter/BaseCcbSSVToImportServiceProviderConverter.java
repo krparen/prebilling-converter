@@ -5,6 +5,8 @@ import com.azoft.energosbyt.prebilling.converter.dto.output.ImportServiceProvide
 import com.azoft.energosbyt.prebilling.converter.dto.output.ServiceProvider;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +14,7 @@ public class BaseCcbSSVToImportServiceProviderConverter
     implements Converter<BaseCcbSSV, ImportServiceProvider> {
 
   @Override
-  public ImportServiceProvider convert(BaseCcbSSV input) {
+  public ImportServiceProvider convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
     ServiceProvider serviceProvider = new ServiceProvider();
     // TODO: запрлнить serviceProvider
     List<ServiceProvider> serviceProviders = new ArrayList<>();

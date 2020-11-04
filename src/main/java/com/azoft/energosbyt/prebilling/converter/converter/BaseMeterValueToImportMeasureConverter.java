@@ -5,6 +5,8 @@ import com.azoft.energosbyt.prebilling.converter.dto.output.ImportMeasure;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Measure;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +17,9 @@ public class BaseMeterValueToImportMeasureConverter implements Converter<BaseMet
   private BaseMeterValueToMeasureConverter baseMeterValueToMeasureConverter;
 
   @Override
-  public ImportMeasure convert(BaseMeterValue input) {
-    Measure measure = baseMeterValueToMeasureConverter.convert(input);
+  public ImportMeasure convert(BaseMeterValue input, Map<String, Object> messageHeaders) {
+
+    Measure measure = baseMeterValueToMeasureConverter.convert(input, messageHeaders);
     List<Measure> measures = new ArrayList<>();
     measures.add(measure);
 

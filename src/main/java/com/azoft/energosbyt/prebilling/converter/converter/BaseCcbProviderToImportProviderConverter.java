@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,7 +19,7 @@ public class BaseCcbProviderToImportProviderConverter
     private ReferenceQueryService referenceQueryService;
 
     @Override
-    public ImportProvider convert(BaseCcbProvider input) {
+    public ImportProvider convert(BaseCcbProvider input, Map<String, Object> messageHeaders) {
 
         ImportProvider output = new ImportProvider();
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class BaseCcbSSVToImportAccountConverter implements Converter<BaseCcbSSV, ImportAccount> {
@@ -16,9 +17,9 @@ public class BaseCcbSSVToImportAccountConverter implements Converter<BaseCcbSSV,
   private BaseCcbSSVToAccountConverter baseCcbSSVToAccountConverter;
 
   @Override
-  public ImportAccount convert(BaseCcbSSV input) {
+  public ImportAccount convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
 
-    Account account = baseCcbSSVToAccountConverter.convert(input);
+    Account account = baseCcbSSVToAccountConverter.convert(input, messageHeaders);
     List<Account> accounts = new ArrayList<>();
     accounts.add(account);
 
