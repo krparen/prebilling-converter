@@ -3,6 +3,8 @@ package com.azoft.energosbyt.prebilling.converter.converter;
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbSSV;
 import com.azoft.energosbyt.prebilling.converter.dto.input.StatementConstructDetail;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Account;
+import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,12 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BaseCcbSSVToAccountConverter extends AbstractConverter<BaseCcbSSV, Account> {
+public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Account> {
+
+    @Autowired
+    private ReferenceQueryService referenceQueryService;
 
     @Override
     public Account convert(BaseCcbSSV input) {
         Account account = new Account();
-        account.setInform_system(getInformSystemCode(input.getSystem_id()));
+        account.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         account.setExt_id(input.getStatementConstructId());
         account.setNumber(input.getAccountNumber());
         account.setIs_enabled(input.getEffectiveStatus());

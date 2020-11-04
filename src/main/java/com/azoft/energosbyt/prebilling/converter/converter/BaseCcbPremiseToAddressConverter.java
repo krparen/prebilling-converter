@@ -2,31 +2,24 @@ package com.azoft.energosbyt.prebilling.converter.converter;
 
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbPremise;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Address;
+import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
-import java.util.List;
-
 @Component
-public class BaseCcbPremiseToAddressConverter extends AbstractConverter<BaseCcbPremise, Address> {
+public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremise, Address> {
 
-    private static final String REGION_QUERY =
-            "SELECT out_value FROM get_one_references('R_STATE','CCB','ID','CCB','DESC')\n" +
-                    "WHERE in_value = :state;";
-
+    @Autowired
+    private ReferenceQueryService referenceQueryService;
 
     @Override
     public Address convert(BaseCcbPremise input) {
         Address address = new Address();
-        address.setInform_system(getInformSystemCode(input.getSystem_id()));
+        address.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         address.setExt_id(input.getPremiseId());
         address.setIndex(input.getPostal());
-        address.setRegion(getRegion(input.getState()));
+        address.setRegion(referenceQueryService.getRegion(input.getState()));
         address.setArea(input.getCounty());
         address.setTown_type(input.getTaxVendorGeographicalCode());
         address.setTown(input.getCity());
@@ -55,23 +48,5 @@ public class BaseCcbPremiseToAddressConverter extends AbstractConverter<BaseCcbP
         }
 
         return address.replaceAll("null", "").replaceAll(" ", " ");
-    }
-
-    private String getRegion(String state) {
-
-        if (Strings.isBlank(state)) {
-            return null;
-        }
-
-        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("state", state);
-        List<String> queryResult = jdbcTemplate.queryForList(REGION_QUERY, namedParameters, String.class);
-
-        if (queryResult.isEmpty()) {
-            return null;
-        }
-
-        return queryResult.stream()
-                .max(Comparator.comparing(String::length))
-                .orElse(null);
     }
 }

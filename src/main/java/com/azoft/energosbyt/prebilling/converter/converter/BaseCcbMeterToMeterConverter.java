@@ -3,6 +3,8 @@ package com.azoft.energosbyt.prebilling.converter.converter;
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbMeter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Meter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Register;
+import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,12 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter, Meter> {
+public class BaseCcbMeterToMeterConverter implements Converter<BaseCcbMeter, Meter> {
+
+    @Autowired
+    private ReferenceQueryService referenceQueryService;
 
     @Override
     public Meter convert(BaseCcbMeter input) {
         Meter output = new Meter();
-        output.setInform_system(getInformSystemCode(input.getSystem_id()));
+        output.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
         output.setExt_id(input.getMeter());
         output.setName(input.getModel());
         output.setNumber(input.getSerialNumber());
