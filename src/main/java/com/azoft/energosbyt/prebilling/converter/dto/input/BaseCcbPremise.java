@@ -1,13 +1,15 @@
 package com.azoft.energosbyt.prebilling.converter.dto.input;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class BaseCcbPremise {
-  private String system_id;
+public class BaseCcbPremise implements SystemIdHolder {
+  @JsonProperty("system_id")
+  private String systemId;
   private String syncRequestId;
   private String premiseId;
   private String parentPremiseId;

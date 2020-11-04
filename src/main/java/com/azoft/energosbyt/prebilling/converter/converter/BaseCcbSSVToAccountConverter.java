@@ -21,7 +21,7 @@ public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Accou
     @Override
     public Account convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
         Account account = new Account();
-        account.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
+        account.setInform_system(getInformSystem(input, messageHeaders));
         account.setExt_id(input.getStatementConstructId());
         account.setNumber(input.getAccountNumber());
         account.setIs_enabled(input.getEffectiveStatus());
@@ -33,6 +33,21 @@ public class BaseCcbSSVToAccountConverter implements Converter<BaseCcbSSV, Accou
         account.setExt_id_person(input.getPersonId());
 
         return account;
+    }
+
+    private String getInformSystem(BaseCcbSSV input, Map<String, Object> messageHeaders) {
+
+        String systemId = null;
+
+        if (messageHeaders.get("system_id") != null) {
+            systemId = (String) messageHeaders.get("system_id");
+        }
+
+        if (systemId == null) {
+            systemId = input.getSystemId();
+        }
+
+        return referenceQueryService.getInformSystemCode(systemId);
     }
 
 

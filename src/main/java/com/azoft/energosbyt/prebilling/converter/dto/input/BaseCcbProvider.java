@@ -1,13 +1,15 @@
 package com.azoft.energosbyt.prebilling.converter.dto.input;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class BaseCcbProvider {
-    String system_id;
+public class BaseCcbProvider implements SystemIdHolder {
+    @JsonProperty("system_id")
+    String systemId;
     String syncRequestId;
 
     List <CLProvider> provider = new ArrayList<>();

@@ -1,6 +1,8 @@
 package com.azoft.energosbyt.prebilling.converter.dto.input;
 
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,8 +10,9 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class BaseCcbSSV {
-  String system_id;
+public class BaseCcbSSV implements SystemIdHolder {
+  @JsonProperty("system_id")
+  String systemId;
   String syncRequestId;
   String statementConstructId;
   String personId;

@@ -7,10 +7,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class BaseMeter {
+public class BaseMeter implements SystemIdHolder {
   private Srch srch = new Srch();
   private Srch_res srch_res = new Srch_res();
 
@@ -68,7 +69,8 @@ public class BaseMeter {
   private String error_code;
   private String error_message;
 
-  private String system_id;
+  @JsonProperty("system_id")
+  private String systemId;
   private String action;
   private String code;
   private String filial_code;

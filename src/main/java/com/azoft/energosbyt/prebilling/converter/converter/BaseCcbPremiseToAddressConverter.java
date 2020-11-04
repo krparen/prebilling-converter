@@ -18,7 +18,7 @@ public class BaseCcbPremiseToAddressConverter implements Converter<BaseCcbPremis
     @Override
     public Address convert(BaseCcbPremise input, Map<String, Object> messageHeaders) {
         Address address = new Address();
-        address.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
+        address.setInform_system(referenceQueryService.getInformSystemCode(input.getSystemId()));
         address.setExt_id(input.getPremiseId());
         address.setIndex(input.getPostal());
         address.setRegion(referenceQueryService.getRegion(input.getState()));

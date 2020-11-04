@@ -21,7 +21,7 @@ public class BaseCcbMeterToMeterConverter implements Converter<BaseCcbMeter, Met
     @Override
     public Meter convert(BaseCcbMeter input, Map<String, Object> messageHeaders) {
         Meter output = new Meter();
-        output.setInform_system(referenceQueryService.getInformSystemCode(input.getSystem_id()));
+        output.setInform_system(referenceQueryService.getInformSystemCode(input.getSystemId()));
         output.setExt_id(input.getMeter());
         output.setName(input.getModel());
         output.setNumber(input.getSerialNumber());

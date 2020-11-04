@@ -23,7 +23,7 @@ public class BaseCcbProviderToImportProviderConverter
 
         ImportProvider output = new ImportProvider();
 
-        String systemCode = referenceQueryService.getInformSystemCode(input.getSystem_id());
+        String systemCode = referenceQueryService.getInformSystemCode(input.getSystemId());
         List<Provider> providers = input.getProvider().stream()
                 .map(inputProvider -> {
                     Provider provider = new Provider();
