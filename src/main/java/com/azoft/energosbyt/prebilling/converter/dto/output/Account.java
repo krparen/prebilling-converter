@@ -13,7 +13,7 @@ public class Account {
   private String inform_system;
   private String ext_id;
   private String number;
-  private String is_enabled;
+  private Boolean is_enabled;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
   @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
   private LocalDate begin_date;

@@ -16,13 +16,15 @@ import java.util.stream.Collectors;
 @Component
 public class BaseCcbSSVToAccountConverter extends AbstractConverter<BaseCcbSSV, Account> {
 
+    private static final String TRUE_EFFECTIVE_STATUS = "A";
+
     @Override
     public Account convert(BaseCcbSSV input, Map<String, Object> messageHeaders) {
         Account account = new Account();
         account.setInform_system(getInformSystem(input, messageHeaders));
         account.setExt_id(input.getStatementConstructId());
         account.setNumber(input.getAccountNumber());
-        account.setIs_enabled(input.getEffectiveStatus());
+        account.setIs_enabled(getIsEnabled(input.getEffectiveStatus()));
         account.setBegin_date(getBeginDate(input));
         account.setEnd_date(getEndDate(input));
         account.setExt_id_company(input.getDivision());
@@ -31,6 +33,10 @@ public class BaseCcbSSVToAccountConverter extends AbstractConverter<BaseCcbSSV, 
         account.setExt_id_person(input.getPersonId());
 
         return account;
+    }
+
+    private Boolean getIsEnabled(String effectiveStatus) {
+        return TRUE_EFFECTIVE_STATUS.equals(effectiveStatus);
     }
 
 

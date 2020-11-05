@@ -15,16 +15,7 @@ public class Meter {
   private String inform_system;
   private String ext_id;
   private String name;
-  private String number;
-  private String is_enabled;
-
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
-  @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
-  private LocalDate begin_date;
-
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = dateFormat) // отвечает за десериализацию
-  @DateTimeFormat(pattern = dateFormat) // отвечает за сериализацию
-  private LocalDate end_date;
+  private String number;;
 
   private Integer tariff_zone;
 

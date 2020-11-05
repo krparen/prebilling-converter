@@ -10,6 +10,16 @@ spring:
       maximum-pool-size: 5
     url: jdbc:postgresql://10.5.2.48:5432/postgres
 
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+      sensitive: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 energosbyt:
   rabbit:
     host: 10.5.3.70
