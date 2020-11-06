@@ -33,11 +33,16 @@ public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter
                 .map(inputRegister -> {
                    Register register = new Register();
                    register.setExt_id_register(inputRegister.getRegisterId());
-                   register.setDigit_capacity(inputRegister.getFullScale());
+                   register.setDigit_capacity(inputRegister.getNumberOfDigitsLeft());
                    register.setUnit(inputRegister.getUnitOfMeasure());
+                   register.setIs_empty(getIsEmpty(inputRegister.getConsumptionType()));
                    return register;
                 })
                 .collect(Collectors.toList());
+    }
+
+    private Boolean getIsEmpty(String consumptionType) {
+        return !"S".equals(consumptionType);
     }
 
     private LocalDate getRemoveDate(BaseCcbMeter input) {

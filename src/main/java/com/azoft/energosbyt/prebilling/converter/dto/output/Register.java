@@ -8,5 +8,5 @@ public class Register {
   private String position;
   private String digit_capacity;
   private String unit;
-  private String is_empty;
+  private Boolean is_empty;
 }
