@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Register {
   private String ext_id_register;
-  private String position;
+  private Integer position;
   private String digit_capacity;
   private String unit;
   private Boolean is_empty;

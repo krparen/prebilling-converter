@@ -3,14 +3,12 @@ package com.azoft.energosbyt.prebilling.converter.converter;
 import com.azoft.energosbyt.prebilling.converter.dto.input.BaseCcbMeter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Meter;
 import com.azoft.energosbyt.prebilling.converter.dto.output.Register;
-import com.azoft.energosbyt.prebilling.converter.service.ReferenceQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter, Meter> {
@@ -29,16 +27,21 @@ public class BaseCcbMeterToMeterConverter extends AbstractConverter<BaseCcbMeter
     }
 
     private List<Register> getRegisters(BaseCcbMeter input) {
-        return input.getMeterConfig().getRegister().stream()
-                .map(inputRegister -> {
-                   Register register = new Register();
-                   register.setExt_id_register(inputRegister.getRegisterId());
-                   register.setDigit_capacity(inputRegister.getNumberOfDigitsLeft());
-                   register.setUnit(inputRegister.getUnitOfMeasure());
-                   register.setIs_empty(getIsEmpty(inputRegister.getConsumptionType()));
-                   return register;
-                })
-                .collect(Collectors.toList());
+
+        List<BaseCcbMeter.ClMeterConfig.Clregister> inputRegisters = input.getMeterConfig().getRegister();
+        List<Register> outputRegisters = new ArrayList<>();
+
+        for (int i = 0; i < inputRegisters.size(); i++) {
+            Register register = new Register();
+            register.setPosition(i + 1);
+            register.setExt_id_register(inputRegisters.get(i).getRegisterId());
+            register.setDigit_capacity(inputRegisters.get(i).getNumberOfDigitsLeft());
+            register.setUnit(inputRegisters.get(i).getUnitOfMeasure());
+            register.setIs_empty(getIsEmpty(inputRegisters.get(i).getConsumptionType()));
+            outputRegisters.add(register);
+        }
+
+        return outputRegisters;
     }
 
     private Boolean getIsEmpty(String consumptionType) {
